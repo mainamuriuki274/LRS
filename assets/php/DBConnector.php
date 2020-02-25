@@ -3,8 +3,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$db = "land_registry _system";
-
+$db = "land_registry_system";
 // Create connection
 $mysqli = mysqli_connect($servername, $username, $password,$db);
 
