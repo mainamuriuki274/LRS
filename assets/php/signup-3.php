@@ -20,6 +20,7 @@ $sql = "INSERT INTO users (ID_Number,ID_Picture,Fullnames,Email_Address,Phonenum
  //password_verify($this->getPassword(),$row['password']);
 
 if($mysqli->query($sql) === true){
+	session_unset;
 	header("location: http://localhost/LRS/Success.html");
 }
 else{

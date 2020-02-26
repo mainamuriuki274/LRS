@@ -45,17 +45,17 @@ session_start();
         <div class="col"></div>
         <div class="col">
             <form style="width:100%;" method="post" action="http://localhost/LRS/assets/php/signup-1.php" enctype="multipart/form-data">
-                <div class="form-group"><label><strong>National Identification Number</strong></label><input class="form-control" type="number" value="<?php echo $_SESSION['idnumber'];?>" placeholder="eg 1234567" name="idNumber" required=""></div>
+                <div class="form-group"><label><strong>National Identification Number</strong></label><input class="form-control" type="number" value="<?php  if (isset($_SESSION['idnumber'])){echo $_SESSION['idnumber'];}?>" minlength="7" maxlength="8" placeholder="eg 1234567" name="idNumber" required=""></div>
                 <div class="form-group"><label style="width:100%;"><strong>Attach Copy of&nbsp;National Identification Number</strong><br></label><input type="file" required=""  id="fileUpload" accept="image/png, image/jpeg, image/jpg" name="idPicture">
-                <?php echo $_SESSION['idpicture'];?>     
+               <?php   if (isset($_SESSION['idpicture'])){ echo $_SESSION['idpicture'];}?>     
                                         
             </div>
-                <div class="form-group"><label><strong>Full names</strong><br></label><input class="form-control" type="text" placeholder="eg Apple Kiwi Grapes" autocomplete="on" value="<?php echo $_SESSION['fullnames'];?>" required="" name="fullNames"></div>
-                <div class="form-group"><label><strong>Email Address</strong><br></label><input class="form-control" type="text" placeholder="e.g e****@***.***" inputmode="email" required="" value="<?php echo $_SESSION['email'];?>" name="emailAddress"></div>
-                <div class="form-group"><label><strong>Mobile Number</strong><br></label><input class="form-control" type="number" placeholder="e.g 07******"  value="<?php echo $_SESSION['phonenumber'];?>"required="" name="mobileNumber"></div>
-                <div class="form-group"><label><strong>Tax Identification Number</strong><br></label><input class="form-control" type="number" required="" value="<?php echo $_SESSION['taxnumber'];?>" name="taxNumber"></div>
-                <div class="form-group"><label><strong>Physical Address</strong></label><input class="form-control" type="text" id="autocomplete_search" required="" value="<?php echo $_SESSION['address'];?>" name="physicalAddress"></div>
-                <div class="form-group"><button class="btn btn-primary float-right" type="submit">Next</button><a class="btn btn-primary float-left" role="button">Back</a></div>
+                <div class="form-group"><label><strong>Full names</strong><br></label><input class="form-control" type="text" placeholder="eg Apple Kiwi Grapes" autocomplete="on" value="<?php if (isset($_SESSION['fullnames'])){ echo $_SESSION['fullnames'];}?>" required="" name="fullNames"></div>
+                <div class="form-group"><label><strong>Email Address</strong><br></label><input class="form-control" type="text" placeholder="e.g e****@***.***" inputmode="email" required="" value="<?php if (isset($_SESSION['email'])){echo $_SESSION['email'];}?>" name="emailAddress"></div>
+                <div class="form-group"><label><strong>Mobile Number</strong><br></label><input class="form-control" type="number" placeholder="e.g 07******"  maxlength="10"  minlength="10"   value="<?php if (isset($_SESSION['phonenumber'])){echo $_SESSION['phonenumber'];}?>"required="" name="mobileNumber"></div>
+                <div class="form-group"><label><strong>Tax Identification Number</strong><br></label><input class="form-control" type="number" required="" value="<?php if (isset($_SESSION['taxnumber'])){echo $_SESSION['taxnumber'];}?>" name="taxNumber"></div>
+                <div class="form-group"><label><strong>Physical Address</strong></label><input class="form-control" type="text" id="autocomplete_search" required="" value="<?php if (isset($_SESSION['address'])){ echo $_SESSION['address'];}?>" name="physicalAddress"></div>
+                <div class="form-group"><button class="btn btn-primary float-right" type="submit">Next</button><a href="http://localhost/LRS/" style="text-color:white;" class="btn btn-primary float-left" role="button">Back</a></div>
             </form>
         </div>
         <div class="col"></div>
