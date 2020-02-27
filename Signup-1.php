@@ -19,7 +19,22 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
-    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+            $(document).ready(function(){ 
+            $('#next').prop('disabled', true);
+            });
+            document.getElementById('email').onkeyup=function(){
+            $.ajax({    //create an ajax request to display.php
+            type: "POST",
+            url: "http://localhost/LRS/assets/php/emailvalidation.php",             
+            dataType: "html",   //expect html to be returned                
+            success: function(response){                     
+            alert(response);
+            }
+            });
+            }
+</script>
 </head>
 
 <body style="width:100%;">
@@ -44,7 +59,7 @@ session_start();
     <div class="row" style="width:100%;margin:0px;">
         <div class="col"></div>
         <div class="col">
-            <form style="width:100%;" method="post" action="http://localhost/LRS/assets/php/signup-1.php" enctype="multipart/form-data">
+            <form name="signup-1" style="width:100%;" method="post" action="http://localhost/LRS/assets/php/signup-1.php" enctype="multipart/form-data">
                 <div class="form-group"><label><strong>National Identification Number</strong></label><input class="form-control" type="number" value="<?php  if (isset($_SESSION['idnumber'])){echo $_SESSION['idnumber'];}?>" minlength="7" maxlength="8" placeholder="eg 1234567" name="idNumber" required=""></div>
                 <div class="form-group"><label style="width:100%;"><strong>Attach Copy of&nbsp;National Identification Number</strong><br></label><input type="file" required=""  id="fileUpload" accept="image/png, image/jpeg, image/jpg" name="idPicture">
                <?php   if (isset($_SESSION['idpicture'])){ echo $_SESSION['idpicture'];}?>     
