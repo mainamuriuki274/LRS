@@ -40,7 +40,7 @@
     <div class="row" style="width:100%;margin:0px;">
         <div class="col"></div>
         <div class="col">
-            <form style="width:100%;" method="post" action="http://localhost/LRS/assets/php/signup-2.php">
+            <form style="width:100%;" method="post" action="http://192.168.1.84/LRS/assets/php/signup-2.php">
                 <div class="form-group"><label><strong>Enter Code</strong><br></label><input class="form-control" type="text" placeholder="Enter code sent to your phone"></div>
                 <div class="form-group"><a class="btn btn-primary" role="button" style="width:100%;" href="code.html">Resend Code(60)</a></div>
                 <div class="form-group"><a class="btn btn-primary float-right" role="button" href="Signup-3.php">Next</a>

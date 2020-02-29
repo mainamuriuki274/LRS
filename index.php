@@ -61,7 +61,7 @@ session_start();
                     </div>
                 </div>
                 <div class="col-5" style="background-color:#f7f9fc;">
-                    <form  method="post" action="http://localhost/LRS/assets/php/login.php" class="m-auto" id="loginform" style="padding-top:10%;" method="post">
+                    <form  method="post" action="http://192.168.1.84/LRS/assets/php/login.php" class="m-auto" id="loginform" style="padding-top:10%;" method="post">
                         <h2 class="sr-only">Login Form</h2>
                         <div class="form-group"><input class="form-control" required="" type="number"  name="idnumber" placeholder="ID /Passport Number"></div>
                         <div class="form-group"><input class="form-control" required="" type="password" name="password" placeholder="Password"></div>

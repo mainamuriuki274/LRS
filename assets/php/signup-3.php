@@ -21,7 +21,7 @@ $sql = "INSERT INTO users (ID_Number,ID_Picture,Fullnames,Email_Address,Phonenum
 
 if($mysqli->query($sql) === true){
 	session_unset;
-	header("location: http://localhost/LRS/Success.html");
+	header("location: http://192.168.1.84/LRS/Success.html");
 }
 else{
 	echo "An Error Occured! Please try again.". $mysqli -> error;

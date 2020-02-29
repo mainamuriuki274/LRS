@@ -23,18 +23,6 @@
 
                         });
 
-                        document.getElementById('confirm').onkeyup=function(){
-                        var password = $("#password").val();
-                        var confirm_password = $("#confirm").val();
-                        if(password != confirm_password) {
-                        $("#confirm").css('border-color', "red");
-                        }
-                        else{
-                        $("#confirm").css('border-color', "green");
-                        document.getElementById("finishbtn").disabled = false;
-                        }
-                        }
-
             </script>
 </head>
 
@@ -60,10 +48,25 @@
     <div class="row" style="width:100%;margin:0px;">
         <div class="col"></div>
         <div class="col">
-            <form id="passwordForm" method="post" action="http://localhost/LRS/assets/php/signup-3.php" style="width:100%;">
+            <form id="passwordForm" method="post" action="http://192.168.1.84/LRS/assets/php/signup-3.php" style="width:100%;">
                 <div class="form-group"><label><strong>Enter Password</strong><br></label> <input type="password" id="password" required="" name="password" placeholder="Password" class="form-control" /></div>
                 <div class="form-group"><label><strong>Confirm Password</strong><br></label><input type="password" id="confirm"  required="" name="" placeholder="Confirm Password" class="form-control" /></div>
                 <div class="form-group"><button id="finishbtn" class="btn btn-primary float-right">Finish</button>
+                        <script>
+
+                                document.getElementById('confirm').onkeyup=function(){
+                                var password = $("#password").val();
+                                var confirm_password = $("#confirm").val();
+                                if(password != confirm_password) {
+                                $("#confirm").css('border-color', "red");
+                                document.getElementById("finishbtn").disabled = true;
+                                }
+                                else{
+                                $("#confirm").css('border-color', "green");
+                                document.getElementById("finishbtn").disabled = false;
+                                }
+                                }
+                        </script>
                 <a class="btn btn-primary float-left" role="button" href="Signup-2.html">Back&nbsp;</a></div>
             </form>
         </div>

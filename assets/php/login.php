@@ -14,16 +14,16 @@ $result = mysqli_query($mysqli,$sql);
 	 if(password_verify($password,$row['Password']) && $idnumber==$row['ID_Number']){
          $pass=password_verify($password,$row['Password']);
          $_SESSION['user']=$row['Fullnames'];
-        header("Location:http://localhost/LRS/Dashboard.php");
+        header("Location:http://192.168.1.84/LRS/Dashboard.php");
           }
           else{
             $_SESSION['LoginError']='<div class="alert alert-danger" role="alert"><p style="text-align:center">Invalid Username or Password </p></div>';
-            header("Location:http://localhost/LRS/index.php");
+            header("Location:http://192.168.1.84/LRS/index.php");
           }
         }
     else{
         $_SESSION['LoginError']='<div class="alert alert-danger" role="alert"><p style="text-align:center">Invalid yead Username or Password</p></div>';
-              header("Location:http://localhost/LRS/index.php");
+              header("Location:http://192.168.1.84/LRS/index.php");
     }
     $mysqli->close();
 

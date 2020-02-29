@@ -34,6 +34,6 @@ $filepath= $_SERVER['DOCUMENT_ROOT']."/LRS/assets/images/id/".$idpicture;
 move_uploaded_file($file_tmp,$filepath);
 $_SESSION['idpicture'] = $idpicture;
 
-header("location: http://localhost/LRS/Signup-2.php");
+header("location: http://192.168.1.84/LRS/Signup-2.php");
 
 ?>

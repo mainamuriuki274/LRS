@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (!isset($_SESSION['user'])){
-    header("Location:http://localhost/LRS/index.php");
+    header("Location:http://192.168.1.84/LRS/index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -52,7 +52,7 @@ if (!isset($_SESSION['user'])){
                             <ul class="nav navbar-nav" style="width:80%;"></ul>
                             <ul class="nav navbar-nav float-right" style="width:30%;">
                                 <li class="dropdown nav-item float-right"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" style="width:170px;" href="#"><strong>Welcome,<?php   if (isset($_SESSION['user'])){ echo $_SESSION['user'];}?>   </strong></a>
-                                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="">>My Profile</a><a class="dropdown-item" role="presentation" href="http://localhost/LRS/assets/php/logout.php">Log Out</a></div>
+                                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="">>My Profile</a><a class="dropdown-item" role="presentation" href="http://192.168.1.84/LRS/assets/php/logout.php">Log Out</a></div>
                                 </li>
                             </ul>
                         </div>
