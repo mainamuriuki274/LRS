@@ -12,7 +12,7 @@ $result = mysqli_query($mysqli,$sql);
       $count = mysqli_num_rows($result);
             if($count == 1) {
             echo '
-            <div class="form-group"><label>Title Number</label><input class="form-control" type="text" disabled="" placeholder="'.$row['Title_Number'].'"></div>
+            <div class="form-group"><label>Title Number</label><input class="form-control" type="text" name="titlenumber" disabled="" placeholder="'.$row['Title_Number'].'"></div>
             <div class="form-group"><label>Approximate Area</label><input class="form-control" type="text" disabled="" placeholder="'.$row['Approximate_Area(Ha)'].'"></div>
             <div class="form-group"><label>Plot Number</label><input class="form-control" type="text" disabled="" placeholder="'.$row['Plot_Number'].'"></div>
             <div class="form-group"><label>County</label><input class="form-control" type="text" disabled="" placeholder="'.$row['County'].'"></div>

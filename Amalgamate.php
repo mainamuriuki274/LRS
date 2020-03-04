@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+session_start();
+include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
+
+?>
 <html>
 
 <head>

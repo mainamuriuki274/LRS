@@ -29,11 +29,13 @@ $result = mysqli_query($mysqli,$sql);
         header("Location:http://192.168.1.84/LRS/Transfer.php");
           }
           else{
-           echo "password error";
+            $_SESSION['TransferSuccess']='<div class="alert alert-danger" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Failed! </strong>Incorrect Password!</div>';
+            header("Location:http://192.168.1.84/LRS/Transfer.php");
           }
         }
     else{
-        echo "error";
+      $_SESSION['TransferSuccess']='<div class="alert alert-danger" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Failed! </strong>Your transaction failed please try again!</div>';
+      header("Location:http://192.168.1.84/LRS/Transfer.php");
     }
     $mysqli->close();
 
