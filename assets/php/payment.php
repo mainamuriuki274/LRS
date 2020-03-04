@@ -43,10 +43,29 @@ else if(isset($_POST['reciept'])){
 }
 else if(isset($_POST['search'])){
   $search_payment=$_POST['search'];
-  $result = mysqli_query($mysqli,"SELECT * FROM `payments` WHERE `Payment_ID` LIKE '%$search_payment%' AND `User_ID`='$user'");
+  $result = mysqli_query($mysqli,"SELECT * FROM `payments` WHERE `Payment_ID` LIKE '%$search_payment%' OR `Description` LIKE '%$search_payment%' OR `Amount` LIKE '%$search_payment%' OR `Date` LIKE '%$search_payment%' AND `User_ID`='$user'");
 $count=mysqli_num_rows($result);
 $n=0;
 if($count>0){
+  while($row=mysqli_fetch_array($result)){
+    $title_result=mysqli_query($mysqli,"SELECT * FROM `titles` WHERE `Title_ID`=".$row['Title_ID']);
+    $title_row=mysqli_fetch_array($title_result);
+    $n++;
+    echo '<tr>
+    <td>'.$n.'</td>
+    <td>'.$title_row['Title_Number'].'</td>
+    <td>'.$row['Description'].'</td>
+    <td>'.$row['Amount'].'</td>
+    <td>'.$row['Date'].'</td>
+    <td><button class="btn btn-primary" onclick="details('.$row['Payment_ID'].')" id="view" type="button">View</button></td>
+</tr>';
+  }
+}
+else if($count==0){
+$result = mysqli_query($mysqli,"SELECT * FROM `payments` WHERE `Title_ID` = (SELECT `Title_ID` FROM `titles` WHERE `Title_Number` LIKE '%$search_payment%' AND  `User_ID`='$user')");
+$sum=mysqli_num_rows($result);
+$n=0;
+if($sum>0){
   while($row=mysqli_fetch_array($result)){
     $title_result=mysqli_query($mysqli,"SELECT * FROM `titles` WHERE `Title_ID`=".$row['Title_ID']);
     $title_row=mysqli_fetch_array($title_result);
@@ -70,6 +89,7 @@ else{
   <td></td>
   <td></td>
   </tr>';
+}
 }
 }
 else{

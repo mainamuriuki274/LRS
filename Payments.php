@@ -231,11 +231,11 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <form action="http://192.168.1.84/LRS/assets/php/payment.php" method="post" class="m-auto">
+                        <form class="m-auto">
                             <div class="form-group m-auto">
                                 <div class="form-row">
                                     <div class="col-4"><input class="form-control" id="search_payment" required="" onkeyup="search()" name="search_payment" type="search" placeholder="Search For a Payment"></div>
-                                    <div class="col-1"><button class="btn btn-primary">Search</button></div>
+                                    <div class="col-1"><button onclick="searchbtn()" class="btn btn-primary">Search</button></div>
                                 </div>
                             </div>
                         </form>
@@ -298,6 +298,7 @@ function pay(){
         success: function(response){ 
         loadpayments();
         $("#makepayment").modal("hide");
+        $("#viewpayment").modal("hide");
         $('#success').html(response);
         $("#success-alert").show();
         $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
@@ -319,6 +320,7 @@ function loadpayments(){
         })
 }
 function search(){
+    $("#search_payment").css('border-color', "lightgrey");
     var search_payment=$('#search_payment').val();
         $.ajax({    //create an ajax request to display.php
         type: "POST",
@@ -329,6 +331,16 @@ function search(){
             $('#payments_table').html(response);
         }            
 })  
+} 
+function searchbtn(){
+    var search_payment=$('#search_payment').val();
+    if(search_payment =="")
+    {
+        $("#search_payment").css('border-color', "red");
+    }
+    else{
+        search();
+    }
 } 
 var payment;
 function details(payment){
