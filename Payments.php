@@ -21,30 +21,46 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <style>
+                @media screen {
+                    #printSection {
+                        display: none;
+                    }
+                }
+
+                @media print {
+                    body * {
+                        visibility:hidden;
+                    }
+                    #printSection, #printSection * {
+                        visibility:visible;
+                    }
+                    #printSection {
+                        position:absolute;
+                        left:0;
+                        top:0;
+                    }
+                }
+            </style>
 </head>
 
 <body>
+
     <div class="modal fade" role="dialog" tabindex="-1" id="viewpayment">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="color:#007bff;">LRP - DHBC23904</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
+                    <h4 class="modal-title" style="color:#007bff;">Payment Reciept</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
                     <form>
                         <div class="form-row">
-                            <div class="col">
-                                <div class="form-group"><label>Title Number</label><input class="form-control" type="text" disabled="" placeholder="RUIRU/RUIRU EAST BLOCK 2/300 55"></div>
-                                <div class="form-group"><label>Plot No.</label><input class="form-control" type="text" disabled="" placeholder="938928/02"></div>
-                                <div class="form-group"><label>Reference Number</label><input class="form-control" type="text" disabled="" placeholder="LRP - DHBC23904"></div>
-                                <div class="form-group"><label>Amount</label><input class="form-control" type="text" disabled="" placeholder="KSH 1000"></div>
-                                <div class="form-group"><label>Date of Payment</label><input class="form-control" type="text" disabled="" placeholder="Ruiru"></div>
-                                <div class="form-group"><label>Registered Owner(s)</label><input class="form-control" type="text" disabled="" placeholder="Muriuki Lewis Maina"></div>
-                                <div class="form-group"><label>ID Number</label><input class="form-control" type="text" disabled="" placeholder="25695163"></div>
+                            <div id="recieptdetails" class="col">
+                               
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer"><button class="btn btn-light" data-dismiss="modal" type="button">Close</button><button class="btn btn-primary" id="print" type="button">Print</button></div>
+                <div class="modal-footer"><button class="btn btn-light" data-dismiss="modal" type="button">Close</button><button class="btn btn-primary" id="btn_print" type="button">Print</button></div>
             </div>
         </div>
     </div>
@@ -54,11 +70,11 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                 <div class="modal-header">
                     <h4 class="modal-title"><h1>Payment</h1></h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
                 <div class="modal-body">
-                    <form style="width:100%;" method="post">
+                    <form action="http://192.168.1.84/LRS/assets/php/payment.php" style="width:100%;" method="post">
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
-                                <select id="title" onchange="details()" name="titleid" class="form-control">
+                                <select required="" id="title" onchange="details()" name="titleid" class="form-control">
                                         <optgroup label="Title to Transfer">
                                         <option value="" selected="">Select Title</option>
                                           <?php
@@ -78,7 +94,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                         </div>
                         <div class="form-group">
                             <div class="form-row">
-                                <div class="col"><select class="form-control float-left">
+                                <div class="col"><select id="payment" name="payment" class="form-control float-left">
                                     <optgroup label="Type of Payment">
                                 <option value="" selected="">Select Payment</option>
                                     <option value="rates">Land Rates</option>
@@ -87,6 +103,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                             </select></div>
                             </div>
                         </div>
+                        </form>
                         <div class="form-group"><label>Payment Method</label>
                             <div role="tablist" id="accordion-1">
                                 <div class="card">
@@ -123,7 +140,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                                             </div>
                                             <div class="form-row" style="margin-top:10px;">
                                                 <div class="col">
-                                                    <form>
+                                                    
                                                         <div class="form-group"><input class="form-control" type="number" placeholder="Enter Card Number"></div>
                                                         <div class="form-group"><input class="form-control" type="number" placeholder="CVV"><label style="color:#999999;">The Last three digits at the back of your card</label></div>
                                                         <div class="form-group"><label>Expiration Date</label>
@@ -131,7 +148,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                                                                 <div class="col"><input class="form-control" type="date"></div>
                                                             </div>
                                                         </div>
-                                                    </form>
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -139,12 +156,14 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                                 </div>
                             </div>
                         </div>
-                    </form>
+                  
                 </div>
                 <div class="modal-footer">
                     <div class="row" style="width:100%;">
-                        <div class="col float-left"><button class="btn btn-danger active float-left" data-dismiss="modal" type="button">Cancel</button></div>
-                        <div class="col"><button class="btn btn-primary float-right" id="modalpay" style="width:72px;" type="button">Pay</button></div>
+                        <div class="col-12"><button class="btn btn-primary float-right" onclick="pay()" style="width:72px;float:right;" type="button">Pay</button> 
+                        
+                        <button class="btn btn-danger active float-left" style="float:left;" data-dismiss="modal" type="button">Cancel</button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -206,17 +225,17 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
             </div>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col">
+                    <div id="success" class="col-12"></div>
                         <hr>
-                    </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <form class="m-auto">
+                        <form action="http://192.168.1.84/LRS/assets/php/payment.php" method="post" class="m-auto">
                             <div class="form-group m-auto">
                                 <div class="form-row">
-                                    <div class="col-4"><input class="form-control" type="search" placeholder="Search For a Payment"></div>
-                                    <div class="col-1"><a class="btn btn-primary" role="button" href="LandSearch-1.html">Search</a></div>
+                                    <div class="col-4"><input class="form-control" id="search_payment" required="" onkeyup="search()" name="search_payment" type="search" placeholder="Search For a Payment"></div>
+                                    <div class="col-1"><button class="btn btn-primary">Search</button></div>
                                 </div>
                             </div>
                         </form>
@@ -230,42 +249,15 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                                 <thead>
                                     <tr>
                                         <th>No.</th>
+                                        <th>Title Number</th>
                                         <th>Description</th>
-                                        <th>Reference Number</th>
-                                        <th>Date of Payment</th>
                                         <th>Amount(Ksh)</th>
-                                        <th>Status</th>
+                                        <th>Date of Payment</th>
                                         <th>Reciept</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Land Rent</td>
-                                        <td><a href="#">LRP-DHBC23904</a></td>
-                                        <td>09/09/2018</td>
-                                        <td>1000/=</td>
-                                        <td class="table-success">NOT PAID</td>
-                                        <td><button class="btn btn-primary" id="view_payment" type="button">View</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Land Rent</td>
-                                        <td><a href="#">LRP-DHBC23904</a></td>
-                                        <td>14/09/2017</td>
-                                        <td>1000/=</td>
-                                        <td class="table-success">NOT PAID</td>
-                                        <td><button class="btn btn-primary" id="view_payment" type="button">View</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>Land Rent</td>
-                                        <td><a href="#">LRP-DHBC23904</a></td>
-                                        <td>17/09/2017</td>
-                                        <td>1000/=</td>
-                                        <td class="table-success">NOT PAID</td>
-                                        <td><button class="btn btn-primary" id="view_payment" type="button">View</button></td>
-                                    </tr>
+                                <tbody id="payments_table">
+                                  
                                 </tbody>
                             </table>
                         </div>
@@ -279,6 +271,99 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCINp2qQyx0FwFLgdKgF9ThIBYsNjTJ9ck"></script>
     <script src="assets/js/script.min.js"></script>
+    <script>
+$(document).ready(function() {
+    loadpayments();
+});
+function pay(){
+    var title=$('#title').val();
+    var payment=$('#payment').val();
+
+    if(title == ""){
+        $("#title").css('border-color', "red");
+    }
+    
+   else if(payment == ""){
+    $("#title").css('border-color', "lightgrey");
+        $("#payment").css('border-color', "red");
+    }
+    else{
+        $("#title").css('border-color', "lightgrey");
+        $("#payment").css('border-color', "lightgrey");
+        $.ajax({    //create an ajax request to display.php
+        type: "POST",
+        url: "http://192.168.1.84/LRS/assets/php/payment.php",             
+        dataType: "text",
+        data:{title: title, payment: payment},   //expect html to be returned                
+        success: function(response){ 
+        loadpayments();
+        $("#makepayment").modal("hide");
+        $('#success').html(response);
+        $("#success-alert").show();
+        $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+         $("#success-alert").slideUp(500);
+             });
+             }            
+        })
+    }
+    
+}
+function loadpayments(){
+    $.ajax({    //create an ajax request to display.php
+        type: "POST",
+        url: "http://192.168.1.84/LRS/assets/php/payment.php",             
+        dataType: "text",   //expect html to be returned                
+        success: function(response){ 
+            $('#payments_table').html(response);
+             }            
+        })
+}
+function search(){
+    var search_payment=$('#search_payment').val();
+        $.ajax({    //create an ajax request to display.php
+        type: "POST",
+        url: "http://192.168.1.84/LRS/assets/php/payment.php",             
+        dataType: "text",
+        data:{search: search_payment},   //expect html to be returned                
+        success: function(response){ 
+            $('#payments_table').html(response);
+        }            
+})  
+} 
+var payment;
+function details(payment){
+        $.ajax({    //create an ajax request to display.php
+        type: "POST",
+        url: "http://192.168.1.84/LRS/assets/php/payment.php",             
+        dataType: "text",
+        data:{reciept: payment},   //expect html to be returned                
+        success: function(response){ 
+        $('#recieptdetails').html(response);
+        $("#viewpayment").modal("show");
+        }            
+})  
+} 
+document.getElementById("btn_print").onclick = function () {
+    printElement(document.getElementById("recieptdetails"));
+}
+
+function printElement(elem) {
+    var domClone = elem.cloneNode(true);
+    
+    var $printSection = document.getElementById("printSection");
+    
+    if (!$printSection) {
+        var $printSection = document.createElement("div");
+        $printSection.id = "printSection";
+        document.body.appendChild($printSection);
+    }
+    
+    $printSection.innerHTML = "";
+    $printSection.appendChild(domClone);
+    window.print();
+}
+
+    </script>
 </body>
 
 </html>
