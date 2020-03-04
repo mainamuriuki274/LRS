@@ -1,15 +1,13 @@
-<?php 
+<?php
 session_start();
-if (!isset($_SESSION['user'])){
-    header("Location:http://192.168.1.84/LRS/index.php");
-}
+include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>LAND REGISTRY SYSTEM-Lewis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
@@ -51,8 +49,8 @@ if (!isset($_SESSION['user'])){
                         <div class="collapse navbar-collapse" id="navcol-1">
                             <ul class="nav navbar-nav" style="width:80%;"></ul>
                             <ul class="nav navbar-nav float-right" style="width:30%;">
-                                <li class="dropdown nav-item float-right"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" style="width:170px;" href="#"><strong>Welcome,<?php   if (isset($_SESSION['user'])){ echo $_SESSION['user'];}?>   </strong></a>
-                                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="">>My Profile</a><a class="dropdown-item" role="presentation" href="http://192.168.1.84/LRS/assets/php/logout.php">Log Out</a></div>
+                                <li class="dropdown nav-item float-right"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" style="width:170px;" href="#"><strong>Welcome, <?php   if (isset($_SESSION['user'])){ echo $_SESSION['user'];}?> </strong></a>
+                                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="#">My Profile</a><a class="dropdown-item" role="presentation" href="#">Log Out</a></div>
                                 </li>
                             </ul>
                         </div>
@@ -70,15 +68,47 @@ if (!isset($_SESSION['user'])){
                     </div>
                 </div>
             </div>
-            
             <div class="container-fluid">
-                <div class="row d-inline-flex flex-box flex-wrap-wrap">
-                    <div class="col-sm-4 flex-box flex-justify-center flex-align-center"><a class="fancybox" rel="gallery1" title="Hero Image Nature" href="Title.html"><img class="img-fluid" data-bs-hover-animate="pulse" src="assets/img/title.png"></a></div>
-                    <div class="col-sm-4 flex-box flex-justify-center flex-align-center"><a class="fancybox" rel="gallery1" title="Hero Image Nature" href="Title.html"><img class="img-fluid" data-bs-hover-animate="pulse" src="assets/img/title.png"></a></div>
-                    <div class="col-sm-4 flex-box flex-justify-center flex-align-center"><a class="fancybox" rel="gallery1" title="Hero Image Nature" href="Title.html"><img class="img-fluid" data-bs-hover-animate="pulse" src="assets/img/title.png"></a></div>
-                    <div class="col-sm-4 flex-box flex-justify-center flex-align-center"><a class="fancybox" rel="gallery1" title="Hero Image Nature" href="Title.html"><img class="img-fluid" data-bs-hover-animate="pulse" src="assets/img/title.png"></a></div>
-                    <div class="col-sm-4 flex-box flex-justify-center flex-align-center"><a class="fancybox" rel="gallery1" title="Hero Image Nature" href="Title.html"><img class="img-fluid" data-bs-hover-animate="pulse" src="assets/img/title.png"></a></div>
-                    <div class="col-sm-4 flex-box flex-justify-center flex-align-center"><a class="fancybox" rel="gallery1" title="Hero Image Nature" href="Title.html"><img class="img-fluid" data-bs-hover-animate="pulse" src="assets/img/title.png"></a></div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Title Number</th>
+                                <th>Plot Number</th>
+                                <th>County&nbsp;</th>
+                                <th>Sub County</th>
+                                <th>Location</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                               <?php
+                               $query="SELECT * FROM titles WHERE Title_ID= ANY (SELECT Title_ID FROM title_owners WHERE User_ID=".$_SESSION['user_id'].")";
+                               $result = mysqli_query($mysqli,$query);
+                               $count=mysqli_num_rows($result);
+                               $n=1;
+                               if($count>0){
+                                while($row=mysqli_fetch_array($result)){
+                                    $title_id=$row['Title_ID'];
+                                    echo '<tr>';
+                                    echo "<td>$n<br></td>";
+                                    echo "<td>".$row['Title_Number']."<br></td>";   
+                                    echo "<td>".$row['Plot_Number']."<br></td>";
+                                    echo "<td>".$row['County']."<br></td>";
+                                    echo "<td>".$row['Sub_County']."<br></td>";
+                                    echo "<td>".$row['Ward']."<br></td>";
+                                    echo '<td><a class="btn btn-primary" id='.$title_id.' href="http://192.168.1.84/LRS/Title.php?id='.$title_id.'">View</a></td>';
+                                    echo "</tr>";
+                                    $n++;
+                                }
+
+                               }
+                               $mysqli->close();
+                               ?>
+                        
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

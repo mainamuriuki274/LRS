@@ -29,11 +29,22 @@ $filename = $_FILES['idPicture']['name'];
 $file_tmp = $_FILES['idPicture']['tmp_name'];
 $filetype= $_FILES['idPicture']['type'];
 $filesize= $_FILES['idPicture']['size'];
-$idpicture = "$idnumber-".$filename;;
-$filepath= $_SERVER['DOCUMENT_ROOT']."/LRS/assets/images/id/".$idpicture;
-move_uploaded_file($file_tmp,$filepath);
-$_SESSION['idpicture'] = $idpicture;
-
+$filepath= $_SERVER['DOCUMENT_ROOT']."/LRS/assets/images/id/".$filename;
+$type   = exif_imagetype(strtolower($file_tmp));
+if($type == IMAGETYPE_PNG){
+    $path = $_SERVER['DOCUMENT_ROOT']."/LRS/assets/images/id/".$idnumber.".png";
+    $image=$idnumber.".png";
+}
+else if($type == IMAGETYPE_JPEG){
+    $path = $_SERVER['DOCUMENT_ROOT']."/LRS/assets/images/id/".$idnumber.".jpeg";
+    $image=$idnumber.".jpeg";
+}
+else
+{
+    echo "Error! File Type not supported";
+}
+move_uploaded_file($file_tmp,$path);
+$_SESSION['idpicture'] = $image;
 header("location: http://192.168.1.84/LRS/Signup-2.php");
 
 ?>

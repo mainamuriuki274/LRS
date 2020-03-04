@@ -51,15 +51,18 @@ session_start();
             <form name="signup-1" id="signup-1" style="width:100%;" method="post" action="http://192.168.1.84/LRS/assets/php/signup-1.php" enctype="multipart/form-data">
                 <div class="form-group"><label><strong>National Identification Number</strong></label><input class="form-control" type="number" value="<?php  if (isset($_SESSION['idnumber'])){echo $_SESSION['idnumber'];}?>" minlength="7" maxlength="8" placeholder="eg 1234567" id="idnumber" min="0" name="idNumber" required="">
                 <script type="text/javascript">
+                var id ;
+                        let respo ;
                             document.getElementById('idnumber').onkeyup=function(){
-                            var id =  $("#idnumber").val();
+                             id =  $("#idnumber").val();
                             $.ajax({    //create an ajax request to display.php
                             type: "POST",
-                            url: "http://192.168.1.84/LRS/assets/php/validation/idvalidation.php",             
-                            dataType: "text",
+                            url: "http://192.168.1.84/LRS/assets/php/validation/idvalidation.php",          
                             data:{idnumber: id},   //expect html to be returned                
-                            success: function(response){   
-                            if(response == "Success") {
+                            success: function(response){ 
+                                    respo = JSON.stringify(response);
+                                    // alert(respo)
+                            if(response == "   Success") {
                             $("#idnumber").css('border-color', "green");
                             $('#idError').html("");
                             }
@@ -78,7 +81,8 @@ session_start();
                     </script>
                  <p style="color:red;font-size:13px;" id="idError"></p>
                 </div>
-                <div class="form-group"><label style="width:100%;"><strong>Attach Copy of&nbsp;National Identification Number</strong><br></label><input type="file" required=""  id="fileUpload" accept="image/png, image/jpeg, image/jpg" name="idPicture">
+                <div class="form-group"><label style="width:100%;"><strong >Attach Copy of&nbsp;National Identification Number</strong><br></label><input type="file" required=""  id="fileUpload" accept="image/png, image/jpeg, image/jpg" name="idPicture">
+                
                <?php   if (isset($_SESSION['idpicture'])){ echo $_SESSION['idpicture'];}?>     
                                         
             </div>
@@ -93,7 +97,7 @@ session_start();
                             dataType: "text",
                             data:{emailAddress: email},   //expect html to be returned                
                             success: function(response){   
-                            if(response == "Success") {
+                            if(response == "   Success") {
                             $("#email").css('border-color', "green");
                             $('#emailError').html("");
                             }
@@ -122,7 +126,7 @@ session_start();
                             dataType: "text",
                             data:{phonenumber: phone},   //expect html to be returned                
                             success: function(response){   
-                            if(response == "Success") {
+                            if(response == "   Success") {
                             $("#phonenumber").css('border-color', "green");
                             $('#phoneError').html("");
                             }
@@ -151,7 +155,7 @@ session_start();
                             dataType: "text",
                             data:{taxnumber: tax},   //expect html to be returned                
                             success: function(response){   
-                            if(response == "Success") {
+                            if(response == "   Success") {
                             $("#taxnumber").css('border-color', "green");
                             $('#taxError').html("");
                             }
@@ -203,10 +207,11 @@ session_start();
         </div>
         <div class="col"></div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCINp2qQyx0FwFLgdKgF9ThIBYsNjTJ9ck"></script>
     <script src="assets/js/script.min.js"></script>
+
 </body>
 
 </html>
