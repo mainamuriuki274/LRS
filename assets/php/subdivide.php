@@ -19,7 +19,7 @@ $result = mysqli_query($mysqli,$sql);
       if($count == 1) {
 	 if(password_verify($password,$row['Password']) && $user==$row['User_ID']){
 		 $log=mysqli_query($mysqli,"INSERT INTO `subdivisons`(`Title_ID`, `Surveyor_ID`, `Status`,`Subdivisions`, `Date`) VALUES ('$titleid','$surveyor_number','Pending Subdivision','None','$date')");
-		 $_SESSION['SubdivideSuccess']='<div class="alert alert-success" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Success! </strong>Title '.$titlenumber.' has been submitted to '.$surveyor_number.' for subdivision
+		 $_SESSION['SubdivideSuccess']='<div class="alert alert-success" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Success! </strong>Title '.$titlenumber.' has been submitted to Surveyor "'.$surveyor_number.'" for subdivision
 	   </div>';
         header("Location:http://192.168.1.84/LRS/Subdivide.php");
           }

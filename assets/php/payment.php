@@ -62,36 +62,54 @@ if($count>0){
   }
 }
 else if($count==0){
-$result = mysqli_query($mysqli,"SELECT * FROM `payments` WHERE `Title_ID` = (SELECT `Title_ID` FROM `titles` WHERE `Title_Number` LIKE '%$search_payment%' AND  `User_ID`='$user')");
-$sum=mysqli_num_rows($result);
-$n=0;
-if($sum>0){
-  while($row=mysqli_fetch_array($result)){
-    $title_result=mysqli_query($mysqli,"SELECT * FROM `titles` WHERE `Title_ID`=".$row['Title_ID']);
-    $title_row=mysqli_fetch_array($title_result);
-    $n++;
+  $result = mysqli_query($mysqli,"SELECT * FROM `titles` WHERE `Title_Number` LIKE '%$search_payment%' OR `Plot_Number` LIKE '%$search_payment%' OR `County` LIKE '%$search_payment%' OR `Sub_County` LIKE '%$search_payment%'  OR `Ward` LIKE '%$search_payment%'");
+  echo $search_payment;
+  $count=mysqli_num_rows($result);
+  if($count>0){
+    while($row=mysqli_fetch_array($result)){
+      $n++;
+    $title_id=$row['Title_ID'];
+    $payment_result=mysqli_query($mysqli,"SELECT * FROM `payments` WHERE `Title_ID` ='$title_id'  AND  `User_ID`='$user'");
+    $payment_sum=mysqli_num_rows($payment_result);
+    $payment_row=mysqli_fetch_array($payment_result);
+    if($count>0)
+      {
+        
+        echo '<tr>
+        <td>'.$n.'</td>
+        <td>'.$row['Title_Number'].'</td>
+        <td>'.$payment_row['Description'].'</td>
+        <td>'.$payment_row['Amount'].'</td>
+        <td>'.$payment_row['Date'].'</td>
+        <td><button class="btn btn-primary" onclick="details('.$payment_row['Payment_ID'].')" id="view" type="button">View</button></td>
+    </tr>';
+      }
+      else{
+        echo '<tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="color:red;"><strong>No Results Found!</strong></td>
+        <td></td>
+        <td></td>
+    </tr>';
+      }
+    }
+  }
+  else{
     echo '<tr>
-    <td>'.$n.'</td>
-    <td>'.$title_row['Title_Number'].'</td>
-    <td>'.$row['Description'].'</td>
-    <td>'.$row['Amount'].'</td>
-    <td>'.$row['Date'].'</td>
-    <td><button class="btn btn-primary" onclick="details('.$row['Payment_ID'].')" id="view" type="button">View</button></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td style="color:red;"><strong>No Results Found!</strong></td>
+    <td></td>
+    <td></td>
 </tr>';
   }
-}
-else{
-  echo '<tr>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td style="color:red;"><strong>No results found!</strong></td>
-  <td></td>
-  <td></td>
-  </tr>';
+  
 }
 }
-}
+
 else{
 $result = mysqli_query($mysqli,"SELECT * FROM `payments` WHERE `User_ID`=$user");
 $count=mysqli_num_rows($result);
