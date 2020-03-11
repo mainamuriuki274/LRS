@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2020 at 02:39 PM
+-- Generation Time: Mar 11, 2020 at 01:00 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -38,14 +38,6 @@ CREATE TABLE `amalgamations` (
   `Status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `amalgamations`
---
-
-INSERT INTO `amalgamations` (`Amalgamate_ID`, `Reference_Number`, `Title_ID`, `User_ID`, `Surveyor_ID`, `Date`, `Status`) VALUES
-(8, 578210525, 1, 2, 111, '06/03/2020', 'Pending Amalgamation'),
-(9, 578210525, 2, 2, 111, '06/03/2020', 'Pending Amalgamation');
-
 -- --------------------------------------------------------
 
 --
@@ -55,8 +47,19 @@ INSERT INTO `amalgamations` (`Amalgamate_ID`, `Reference_Number`, `Title_ID`, `U
 CREATE TABLE `caveats` (
   `Caveat_ID` int(11) NOT NULL,
   `Title_ID` int(11) NOT NULL,
-  `Caveat` varchar(1000) NOT NULL
+  `User_ID` int(11) NOT NULL,
+  `Caveat` varchar(1000) NOT NULL,
+  `Supporting_Documents` varchar(255) NOT NULL,
+  `Date` varchar(255) NOT NULL,
+  `Status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `caveats`
+--
+
+INSERT INTO `caveats` (`Caveat_ID`, `Title_ID`, `User_ID`, `Caveat`, `Supporting_Documents`, `Date`, `Status`) VALUES
+(4, 35, 1, 'dssadsa', '1-', '11/03/2020', 'ACTIVE');
 
 -- --------------------------------------------------------
 
@@ -67,9 +70,12 @@ CREATE TABLE `caveats` (
 CREATE TABLE `charges` (
   `Charge_ID` int(11) NOT NULL,
   `Title_ID` int(11) NOT NULL,
-  `Charge` varchar(1000) NOT NULL
+  `User_ID` int(11) NOT NULL,
+  `Charge` varchar(1000) NOT NULL,
+  `Supporting_Documents` varchar(255) NOT NULL,
+  `Date` varchar(255) NOT NULL,
+  `Status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- Error reading data for table land_registry_system.charges: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `land_registry_system`.`charges`' at line 1
 
 -- --------------------------------------------------------
 
@@ -86,17 +92,6 @@ CREATE TABLE `payments` (
   `Date` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `payments`
---
-
-INSERT INTO `payments` (`Payment_ID`, `User_ID`, `Title_ID`, `Description`, `Amount`, `Date`) VALUES
-(12, 2, 1, 'Land Rates', 1000, '04/03/2020'),
-(13, 2, 2, 'Land Rent', 1500, '04/03/2020'),
-(14, 2, 2, 'Land Rent', 1500, '04/03/2020'),
-(15, 2, 1, 'Land Rent', 1500, '04/03/2020'),
-(16, 2, 1, 'Land Rent', 1500, '04/03/2020');
-
 -- --------------------------------------------------------
 
 --
@@ -111,13 +106,6 @@ CREATE TABLE `subdivisons` (
   `Subdivisons` text NOT NULL,
   `Date` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `subdivisons`
---
-
-INSERT INTO `subdivisons` (`Subdivision_ID`, `Title_ID`, `Surveyor_ID`, `Status`, `Subdivisons`, `Date`) VALUES
-(1, 2, 0, 'Pending Subdivision', '', '04/03/2020');
 
 -- --------------------------------------------------------
 
@@ -134,7 +122,15 @@ CREATE TABLE `titles` (
   `Sub_County` varchar(255) NOT NULL,
   `Ward` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- Error reading data for table land_registry_system.titles: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `land_registry_system`.`titles`' at line 1
+
+--
+-- Dumping data for table `titles`
+--
+
+INSERT INTO `titles` (`Title_ID`, `Title_Number`, `Plot_Number`, `Approximate_Area(Ha)`, `County`, `Sub_County`, `Ward`) VALUES
+(34, 'RUIRU/RUIRU EAST BLOCK 2/300 56', '122121/10', 12, 'Nairobi', 'Kisauni', 'Diani'),
+(35, 'RUIRU/RUIRU EAST BLOCK 2/300 59', '122121/12', 0, 'Mombasa', 'Changamwe', 'Kipevu'),
+(38, 'RUIRU/RUIRU EAST BLOCK 2/300 55', '122121/08', 1, 'Kiambu', 'Jomvu', 'Likoni');
 
 -- --------------------------------------------------------
 
@@ -154,12 +150,13 @@ CREATE TABLE `title_owners` (
 --
 
 INSERT INTO `title_owners` (`Title_Owners_ID`, `Title_ID`, `User_ID`, `Type_of_Ownership`) VALUES
-(9, 10, 1, 'SOLE'),
-(10, 10, 1, 'SOLE'),
-(11, 12, 1, 'SOLE'),
-(12, 10, 1, 'SOLE'),
-(13, 12, 1, 'SOLE'),
-(14, 15, 1, 'SOLE');
+(31, 32, 1, 'SOLE'),
+(32, 32, 1, 'SOLE'),
+(33, 34, 1, 'SOLE'),
+(34, 35, 1, 'SOLE'),
+(35, 34, 1, 'SOLE'),
+(36, 35, 1, 'SOLE'),
+(37, 38, 1, 'SOLE');
 
 -- --------------------------------------------------------
 
@@ -176,14 +173,6 @@ CREATE TABLE `transfers` (
   `Status` varchar(255) NOT NULL,
   `Accept_Date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `transfers`
---
-
-INSERT INTO `transfers` (`Transfer_ID`, `Title_ID`, `User_ID(From)`, `User_ID(To)`, `Transfer_Date`, `Status`, `Accept_Date`) VALUES
-(4, 2, 1, 2, '09/03/2020', 'ACCEPTED', 'None'),
-(5, 2, 2, 1, '09/03/2020', 'ACCEPTED', 'None');
 
 -- --------------------------------------------------------
 
@@ -210,8 +199,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`User_ID`, `ID_Number`, `ID_Picture`, `Fullnames`, `Email_Address`, `Phonenumber`, `Tax_Number`, `Gender`, `Date_of_Birth`, `Physical_Address`, `Password`) VALUES
-(1, 12345678, '12321123.jpeg', 'Lewis Maina', 'muriukimainalewis@gmail.com', 714308029, 1234567890, '', '', '123 William Street, New York, NY, USA', '$2y$10$.x6syWeDUn7FQ6b/g663Leunqu8qctADsCrJOJuucRvb1fW7x9Vfq'),
-(3, 87654321, '87654321.jpeg', 'Angela Gathoni', 'angelagathoni@gmail.com', 789152368, 123456789, 'Male', '1999-01-07', '123 William Street, New York, NY, USA', '$2y$10$n1Nj0wEUH6z/6DCrq9Q10emsbKqEZ9LgWoIydwC6FLesXYFkteCOS');
+(1, 12345678, '12321123.jpeg', 'Lewis Maina', 'muriukimainalewis@gmail.com', 714308029, 1234567890, 'Male', '1998-05-12', '123 William Street, New York, NY, USA', '$2y$10$.x6syWeDUn7FQ6b/g663Leunqu8qctADsCrJOJuucRvb1fW7x9Vfq'),
+(3, 87654321, '87654321.jpeg', 'Angela Gathoni', 'angelagathoni@gmail.com', 789152368, 123456789, 'Female', '1999-01-07', '123 William Street, New York, NY, USA', '$2y$10$n1Nj0wEUH6z/6DCrq9Q10emsbKqEZ9LgWoIydwC6FLesXYFkteCOS');
 
 -- --------------------------------------------------------
 
@@ -236,9 +225,10 @@ CREATE TABLE `user_titles` (
 --
 
 INSERT INTO `user_titles` (`Title_ID`, `Title_Number`, `Plot_Number`, `Approximate_Area(Ha)`, `County`, `Sub_County`, `Ward`, `User_ID`, `Status`) VALUES
-(75, 'RUIRU/RUIRU EAST BLOCK 2/300 59', '122121/12', 122, 'Kiambu', 'Changamwe', 'Kipevu', 1, 'SUBMITTED'),
-(78, 'RUIRU/RUIRU EAST BLOCK 2/300 55', '122121/11', 11, 'Mombasa', 'Changamwe', 'Kipevu', 1, 'SUBMITTED'),
-(80, '321', '12', 0, 'Mombasa', 'Changamwe', 'Kipevu', 1, 'SUBMITTED');
+(89, 'RUIRU/RUIRU EAST BLOCK 2/300 59', '122121/12', 0, 'Mombasa', 'Changamwe', 'Kipevu', 1, 'SUBMITTED'),
+(91, 'RUIRU/RUIRU EAST BLOCK 2/300 56', '122121/10', 12, 'Nairobi', 'Kisauni', 'Diani', 1, 'SUBMITTED'),
+(92, 'RUIRU/RUIRU EAST BLOCK 2/300 59', '122121/11', 1, 'Mombasa', 'Changamwe', 'Kipevu', 1, 'SUBMITTED'),
+(93, 'RUIRU/RUIRU EAST BLOCK 2/300 55', '122121/08', 1, 'Kiambu', 'Jomvu', 'Likoni', 1, 'SUBMITTED');
 
 --
 -- Indexes for dumped tables
@@ -278,7 +268,9 @@ ALTER TABLE `subdivisons`
 -- Indexes for table `titles`
 --
 ALTER TABLE `titles`
-  ADD PRIMARY KEY (`Title_ID`);
+  ADD PRIMARY KEY (`Title_ID`),
+  ADD UNIQUE KEY `Title_Number` (`Title_Number`),
+  ADD UNIQUE KEY `Plot_Number` (`Plot_Number`);
 
 --
 -- Indexes for table `title_owners`
@@ -316,13 +308,13 @@ ALTER TABLE `user_titles`
 -- AUTO_INCREMENT for table `amalgamations`
 --
 ALTER TABLE `amalgamations`
-  MODIFY `Amalgamate_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `Amalgamate_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `caveats`
 --
 ALTER TABLE `caveats`
-  MODIFY `Caveat_ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Caveat_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `charges`
@@ -334,7 +326,7 @@ ALTER TABLE `charges`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `Payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `Payment_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `subdivisons`
@@ -346,19 +338,19 @@ ALTER TABLE `subdivisons`
 -- AUTO_INCREMENT for table `titles`
 --
 ALTER TABLE `titles`
-  MODIFY `Title_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `Title_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `title_owners`
 --
 ALTER TABLE `title_owners`
-  MODIFY `Title_Owners_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `Title_Owners_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `transfers`
 --
 ALTER TABLE `transfers`
-  MODIFY `Transfer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `Transfer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -370,7 +362,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_titles`
 --
 ALTER TABLE `user_titles`
-  MODIFY `Title_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `Title_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

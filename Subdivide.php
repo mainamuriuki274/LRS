@@ -147,14 +147,14 @@ if (!isset($_SESSION['user_id'])){
         
 });
 function details(){
-    $update_owner=mysqli_query($mysqli,"UPDATE `title_owners` SET `User_ID`='$newowner' WHERE Title_ID='$titlenumber'");
+    var title=$('#title').val();
     if(title != ""){
         $("#title").css('border-color', "lightgrey");
         $.ajax({    //create an ajax request to display.php
         type: "POST",
         url: "http://192.168.1.84/LRS/assets/php/title_details.php",             
         dataType: "text",
-        data:{accept: title},   //expect html to be returned                
+        data:{title: title},   //expect html to be returned                
         success: function(response){ 
         $('#title_details').html(response);
         surveyor.focus();

@@ -101,7 +101,10 @@ if (!isset($_SESSION['user_id'])){
                                 $caveat_row=mysqli_fetch_array($caveat_result);
                                 $caveat_count=mysqli_num_rows($caveat_result);
                                 if($caveat_count>0){
-                                    $caveat=$caveat_row['Caveat'];
+                                  //  $caveat=$caveat_row['Caveat'];
+                                    $user_sql =mysqli_query($mysqli,"SELECT * FROM `users` WHERE `User_ID`='".$caveat_row['User_ID']."'");
+                                    $usr_row=mysqli_fetch_array($user_sql);
+                                    $caveat=$usr_row['Fullnames'] ." claims: ". $caveat_row['Caveat'];
 
                                 }
                                 else{

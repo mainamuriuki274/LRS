@@ -14,7 +14,7 @@ $user=$_SESSION['user_id'];
 
 $query="INSERT INTO `user_titles`(`Title_Number`, `Plot_Number`, `Approximate_Area(Ha)`, `County`, `Sub_County`, `Ward`, `User_ID`, `Status`) VALUES ('$titlenumber','$plotnumber','$approximatearea','$county','$subcounty','$ward','$user','NOT SUBMITTED')";
 $sql=mysqli_query($mysqli,$query);
-if($mysqli->query($query) === true){
+if($sql){
 echo "Success";
 }
 else{

@@ -54,7 +54,7 @@ if (!isset($_SESSION['user_id'])){
                         <div class="collapse navbar-collapse" id="navcol-1">
                             <ul class="nav navbar-nav" style="width:80%;"></ul>
                             <ul class="nav navbar-nav float-right" style="width:30%;">
-                                <li class="dropdown nav-item float-right"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" style="width:170px;" href="#"><strong>Welcome, <?php   if (isset($_SESSION['user'])){ echo $_SESSION['user'];}?><</strong></a>
+                                <li class="dropdown nav-item float-right"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" style="width:170px;" href="#"><strong>Welcome, <?php   if (isset($_SESSION['user'])){ echo $_SESSION['user'];}?></strong></a>
                                     <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="http://192.168.1.84/LRS/Profile.php">My Profile</a><a class="dropdown-item" role="presentation" href="http://192.168.1.84/LRS/assets/php/logout.php">Log Out</a></div>
                                 </li>
                             </ul>
@@ -148,6 +148,12 @@ unset($_SESSION['ConfirmationSuccess']);
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCINp2qQyx0FwFLgdKgF9ThIBYsNjTJ9ck"></script>
     <script src="assets/js/script.min.js"></script>
     <script>
+        $(document).ready(function() {
+  $("#success-alert").show();
+    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+      $("#success-alert").slideUp(500);
+    });
+});
     var title;
         function accept(title){
             $.ajax({    //create an ajax request to display.php
@@ -156,7 +162,7 @@ unset($_SESSION['ConfirmationSuccess']);
             dataType: "text",
             data:{accept: title},   //expect html to be returned                
             success: function(response){ 
-                alert("Success");
+              location.reload();  
              
             }            
             })
@@ -166,9 +172,9 @@ unset($_SESSION['ConfirmationSuccess']);
             type: "POST",
             url: "http://192.168.1.84/LRS/assets/php/confirmation.php",             
             dataType: "text",
-            data:{accept: title},   //expect html to be returned                
+            data:{decline: title},   //expect html to be returned                
             success: function(response){ 
-                alert("DEclined");
+                location.reload();  
 
             }            
             })

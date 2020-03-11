@@ -61,7 +61,10 @@ if (!isset($_SESSION['user_id'])){
                 </nav>
                 <hr>
             </div>
-            
+            <div class="col-12"><?php if(isset($_SESSION['ProfileSuccess'])){
+                    echo $_SESSION['ProfileSuccess'];
+                    unset($_SESSION['ProfileSuccess']);
+                }?></div>
             <?php
                             
                             $user=$_SESSION['user_id'];
@@ -72,7 +75,8 @@ if (!isset($_SESSION['user_id'])){
                             if($count>0)
                             {
                                 echo '  
-                                <form method="post" action="http://192.168.1.84/LRS/assets/php/updateprofile.php" enctype="multipart/form-data">
+                                <form method="post" id="update_profile" action="http://192.168.1.84/LRS/assets/php/updateprofile.php" enctype="multipart/form-data">
+                                
                              <div class="container-fluid">
                                 <div class="form-row">
                                     <div class="col-3" style="width:250px;height:300px;">
@@ -95,8 +99,12 @@ if (!isset($_SESSION['user_id'])){
                                         </div>
                                         <div class="col-9">
                                       
-                                            <div class="form-group"><input class="form-control" type="text" id="editprofile" style="color:#007bff;" value="+254 '.$row['Phonenumber'].'"></div>
-                                            <div class="form-group"><input class="form-control" type="text" id="editprofile" style="color:#007bff;" value="'.$row['Email_Address'].'"></div>
+                                            <div class="form-group"><input class="form-control" type="text"  style="max-width:300px;color:#007bff;" required="" id="phonenumber" name="phonenumber" onkeyup="phoneverification()" value="0'.$row['Phonenumber'].'">
+                                            <p style="color:red;font-size:13px;" id="phoneError"></p>
+                                            </div>
+                                            <div class="form-group"><input class="form-control" type="text" style="max-width:300px;color:#007bff;" id="emailaddress" onkeyup="emailverification()" required="" name="email" value="'.$row['Email_Address'].'">
+                                            <p style="color:red;font-size:13px;" id="emailError"></p>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr>
@@ -120,7 +128,7 @@ if (!isset($_SESSION['user_id'])){
                                             <h5 id="labels" style="color:#000000;">Gender:</h5>
                                         </div>
                                         <div class="col-9">
-                                            <div class="form-group"><input class="form-control" type="text" id="editprofile" style="color:#007bff;" value="'.$row['Physical_Address'].'"></div>
+                                            <div class="form-group"><input class="form-control" type="text" id="editprofile"  required="" name="address" style="color:#007bff;" value="'.$row['Physical_Address'].'"></div>
                                             <div class="form-group"><input class="form-control" type="text" id="editprofile" style="color:#007bff;" value="'.$row['Date_of_Birth'].'" disabled=""></div>
                                             <div class="form-group"><input class="form-control" type="text" id="editprofile" style="color:#007bff;" value="'.$row['Gender'].'" disabled=""></div>
                                         </div>
@@ -145,6 +153,74 @@ if (!isset($_SESSION['user_id'])){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCINp2qQyx0FwFLgdKgF9ThIBYsNjTJ9ck"></script>
     <script src="assets/js/script.min.js"></script>
+    <script>
+$(document).ready(function() {
+  $("#success-alert").show();
+    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+      $("#success-alert").slideUp(500);
+    });
+});
+$('#update_profile').submit(function() {
+  var email =  $("#emailError").text();
+  var phone =  $("#phoneError").text();
+  if(email !="" &&  phone !="") 
+  {
+     return false;
+  }
+  else{
+     return true;
+  }
+});
+function emailverification(){
+var email =  $("#emailaddress").val();
+$.ajax({    //create an ajax request to display.php
+type: "POST",
+url: "http://192.168.1.84/LRS/assets/php/validation/emailvalidation.php",             
+dataType: "text",
+data:{emailAddress: email},   //expect html to be returned                
+success: function(response){   
+if(response == "   Success") {
+$("#email").css('border-color', "green");
+$('#emailError').html("");
+}
+/*
+else if(response == "Invalid Email"){
+$("#email").css('border-color', "red");
+$('#emailError').html("");
+} */  
+else{
+$("#email").css('border-color', "red");
+$('#emailError').html(response);
+}            
+}
+})
+}
+function phoneverification(){
+var phone =  $("#phonenumber").val();
+$.ajax({    //create an ajax request to display.php
+type: "POST",
+url: "http://192.168.1.84/LRS/assets/php/validation/phonevalidation.php",             
+dataType: "text",
+data:{phonenumber: phone},   //expect html to be returned                
+success: function(response){   
+if(response == "   Success") {
+$("#phonenumber").css('border-color', "green");
+$('#phoneError').html("");
+}
+/*
+else if(response == "Invalid Phonenumber"){
+$("#phonenumber").css('border-color', "red");
+$('#phoneError').html("");
+}   */
+else{
+$("#phonenumber").css('border-color', "red");
+$('#phoneError').html(response);
+}            
+}
+})
+}
+
+</script>
 </body>
 
 </html>

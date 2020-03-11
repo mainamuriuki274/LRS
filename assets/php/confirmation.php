@@ -14,7 +14,7 @@ if(isset($_POST['accept'])){
   $row=mysqli_fetch_array($result);
   $update_owner=mysqli_query($mysqli,"UPDATE `title_owners` SET `User_ID`='$user' WHERE Title_ID=".$row['Title_ID']."");
   $_SESSION['ConfirmationSuccess']='<div class="alert alert-success" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Successfully Accepted! </strong></div>';
-     header("Location:http://192.168.1.84/LRS/Confirmation.php");
+
     $mysqli->close();
 }
 else if(isset($_POST['decline'])){
@@ -25,9 +25,9 @@ else if(isset($_POST['decline'])){
   $sql = "SELECT * FROM transfers WHERE `Transfer_ID`='$title'";
   $result = mysqli_query($mysqli,$sql);
   $row=mysqli_fetch_array($result);
-  $update_owner=mysqli_query($mysqli,"UPDATE `title_owners` SET `User_ID`='".$row['User_From']."' WHERE Title_ID='".$row['Title_ID']."'");
+  $update_owner=mysqli_query($mysqli,"UPDATE `title_owners` SET `User_ID`='".$row['User_ID(From)']."' WHERE Title_ID='".$row['Title_ID']."'");
   $_SESSION['ConfirmationSuccess']='<div class="alert alert-danger" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Successfully Declined! </strong></div>';
-  header("Location:http://192.168.1.84/LRS/Confirmation.php");
+
     $mysqli->close();
 }
 

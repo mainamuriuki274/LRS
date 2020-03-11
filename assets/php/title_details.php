@@ -4,8 +4,6 @@ include 'DBConnector.php';
 // attempt insert query execution
 
 $title   = $_POST['title'];
-
-
 $sql="SELECT * FROM `titles` WHERE Title_ID='$title'";
 $result = mysqli_query($mysqli,$sql);
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);

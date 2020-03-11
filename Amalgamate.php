@@ -124,7 +124,7 @@ if (!isset($_SESSION['user_id'])){
                                 <div class="form-row">
                                 <div class="col-10">           
                                         <select id="title"   class="form-control">
-                                        <optgroup>
+                                        <optgroup id="titles">
                                         <option value="" >Select Title</option>
                                           <?php
                                           $user=$_SESSION['user_id'];
@@ -199,12 +199,14 @@ $(document).ready(function() {
     
     var n = document.getElementById("title");
     var y = n.selectedIndex + 1;
+    
    
     function details(){
-        $("#title").css('border-color', "lightgrey"); 
-    $("#surveyor_number").css('border-color', "lightgrey");
     var titleid=$('#title').val();  
-        var title=  $("#title option:selected").text();
+    var title=  $("#title option:selected").text();
+    $("#title").css('border-color', "lightgrey"); 
+    $("#surveyor_number").css('border-color', "lightgrey");
+    
     if(titleid != ""){
         if(x < max_fields){
             n.remove(y);
@@ -222,7 +224,7 @@ $(document).ready(function() {
     
 }
 function removeTitle(){
-
+ 
         $('#remove_title').parent('div').remove();
         x--;
     }

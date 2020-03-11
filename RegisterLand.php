@@ -139,7 +139,7 @@ if (!isset($_SESSION['user_id'])){
                                         <div class="form-group"><label>Title deed Number</label><input class="form-control flex-wrap" id="titlenumber" name="titlenumber" required="" type="text" placeholder="Title deed number"></div>
                                     </div>
                                     <div class="col">
-                                        <div class="form-group"><label>Approximate size</label><input class="form-control flex-wrap" type="number" id="$approximatearea" required="" name="approximatearea" placeholder="Approximate size"></div>
+                                        <div class="form-group"><label>Approximate size</label><input class="form-control flex-wrap" type="number" id="approximatearea" required="" name="approximatearea" placeholder="Approximate size"></div>
                                     </div>
                                 </div>
                                 <div class="form-row">
