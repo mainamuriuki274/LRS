@@ -22,19 +22,20 @@ $result = mysqli_query($mysqli,$sql);
 		 $owner_row=mysqli_fetch_array($result);
 		 $newowner=$owner_row['User_ID'];
 		 $newname=$owner_row['Fullnames'];
-		 $update_owner=mysqli_query($mysqli,"UPDATE `title_owners` SET `User_ID`='$newowner' WHERE Title_ID='$titlenumber'");
-		 $log=mysqli_query($mysqli,"INSERT INTO `transfers`(`Title_ID`, `User_ID(From)`, `User_ID(To)`, `Transfer_Date`) VALUES ('$titlenumber','$user','$newowner','$date')");
+		 $update_owner=mysqli_query($mysqli,"UPDATE `title_owners` SET `User_ID`='0' WHERE Title_ID='$titlenumber'");
+     $log=mysqli_query($mysqli,"INSERT INTO `transfers`(`Title_ID`, `User_ID(From)`, `User_ID(To)`, `Transfer_Date`,`Status`,`Accept_Date`) VALUES ('$titlenumber','$user','$newowner','$date','Pending','None')");
+     
 		 $_SESSION['TransferSuccess']='<div class="alert alert-success" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Success! </strong>Title '.$titlenumber.' transferred to '.$newname.'
 	   </div>';
         header("Location:http://192.168.1.84/LRS/Transfer.php");
           }
           else{
-            $_SESSION['TransferSuccess']='<div class="alert alert-danger" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Failed! </strong>Incorrect Password!</div>';
-            header("Location:http://192.168.1.84/LRS/Transfer.php");
+            $_SESSION['TransferSuccess']='<div class="alert alert-danger" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Incorrect Password!</strong></div>';
+               header("Location:http://192.168.1.84/LRS/Transfer.php");
           }
         }
     else{
-      $_SESSION['TransferSuccess']='<div class="alert alert-danger" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Failed! </strong>Your transaction failed please try again!</div>';
+      $_SESSION['TransferSuccess']='<div class="alert alert-danger" id="success-alert"><button type="button" class="close" data-dismiss="alert">x</button><strong>Error!</strong> An error occurred please try again!'.$log->error.'</div>';
       header("Location:http://192.168.1.84/LRS/Transfer.php");
     }
     $mysqli->close();

@@ -10,11 +10,13 @@ $email		= $_SESSION['email'];
 $phonenumber=$_SESSION['phonenumber'];
 $taxnumber	=$_SESSION['taxnumber'];
 $address	=$_SESSION['address'];
+$date_of_birth	=$_SESSION['date_of_birth'];
+$gender	=$_SESSION['gender'];
 $pass		= $_POST['password'];
 $password =password_hash($pass,PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO users (ID_Number,ID_Picture,Fullnames,Email_Address,Phonenumber,Tax_Number,Physical_Address,Password)
- VALUES ('$idnumber','$idpicture','$fullnames','$email','$phonenumber','$taxnumber','$address','$password')";
+$sql = "INSERT INTO users (ID_Number,ID_Picture,Fullnames,Email_Address,Phonenumber,Tax_Number,Gender,Date_of_Birth,Physical_Address,Password)
+ VALUES ('$idnumber','$idpicture','$fullnames','$email','$phonenumber','$taxnumber','$gender','$date_of_birth','$address','$password')";
 
  //password_hash($this->password,PASSWORD_DEFAULT);
  //password_verify($this->getPassword(),$row['password']);

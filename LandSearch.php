@@ -1,7 +1,9 @@
 <?php
 session_start();
 include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
-
+if (!isset($_SESSION['user_id'])){
+    header("Location:http://192.168.1.84/LRS/index.php");
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,17 +31,17 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
     <!-- Start: Sidebar Menu -->
     <div id="wrapper">
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav" style="margin-right:0px;">
-                <li class="sidebar-brand"> <a>Land Registry System</a></li>
-                <li> <a data-bs-hover-animate="pulse" style="margin-top:100px;" href="Dashboard.html">My Titles<br></a></li>
-                <li> <a data-bs-hover-animate="pulse" style="background-color:#000000;color:#808080;" href="Transfer.html">Transfer</a></li>
-                <li> <a data-bs-hover-animate="pulse" href="Subdivide.html">Subdivide</a></li>
-                <li> <a data-bs-hover-animate="pulse" href="Amalgamate.html">Amalgamate/Merge</a></li>
-                <li> <a data-bs-hover-animate="pulse" href="Payments.html">Payments</a></li>
-                <li> <a data-bs-hover-animate="pulse" href="Caution.html">Caution</a><a data-bs-hover-animate="pulse" href="Charges.html">Charges</a><a data-bs-hover-animate="pulse" style="background-color:#333333;color:#ffffff;" href="LandSearch.html">Land Search</a></li>
-                <li>
-                <a data-bs-hover-animate="pulse" href="Lease.html">Lease</a></li>
-                
+        <ul class="sidebar-nav" style="margin-right:0px;height:100%;">
+                <li class="sidebar-brand" style="height:15%;"> <a class="text-monospace" style="height:100%;background-color:#000000;padding-top:14%;color:#dfe7f1;" href="Dashboard.html">Land Registry System</a></li>
+                <li> <a  data-bs-hover-animate="pulse" style="background-color:rgba(255,255,255,0);color:#999999;" href="Dashboard-table.php">My Titles<br></a></li>
+                <li> <a data-bs-hover-animate="pulse" href="Confirmation.php">Confirm Transfer</a></li>
+                <li> <a  data-bs-hover-animate="pulse" href="Transfer.php">Transfer</a></li>
+                <li> <a data-bs-hover-animate="pulse" href="Subdivide.php">Subdivide</a></li>
+                <li> <a data-bs-hover-animate="pulse" href="Amalgamate.php">Amalgamate/Merge</a></li>
+                <li> <a data-bs-hover-animate="pulse" href="Payments.php">Payments</a></li>
+               <li> <a data-bs-hover-animate="pulse" href="Caution.php">Caution</a><li>
+               <li> <a style="background-color:#333333;color:#ffffff;" data-bs-hover-animate="pulse" href="LandSearch.php">Land Search</a></li>
+               <li> <a data-bs-hover-animate="pulse"  href="RegisterLand.php">Register Land</a></li>
             </ul>
         </div>
         <div class="page-content-wrapper">
@@ -53,7 +55,7 @@ include $_SERVER['DOCUMENT_ROOT'].'/LRS/assets/php/DBConnector.php';
                             <ul class="nav navbar-nav" style="width:80%;"></ul>
                             <ul class="nav navbar-nav float-right" style="width:30%;">
                                 <li class="dropdown nav-item float-right"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" style="width:170px;" href="#"><strong>Welcome, <?php   if (isset($_SESSION['user'])){ echo $_SESSION['user'];}?></strong></a>
-                                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="#">My Profile</a><a class="dropdown-item" role="presentation" href="#">Log Out</a></div>
+                                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="http://192.168.1.84/LRS/Profile.php">My Profile</a><a class="dropdown-item" role="presentation" href="http://192.168.1.84/LRS/assets/php/logout.php">Log Out</a></div>
                                 </li>
                             </ul>
                         </div>

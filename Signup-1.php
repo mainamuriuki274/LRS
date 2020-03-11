@@ -174,6 +174,17 @@ session_start();
                     </script>
                 <p style="color:red;font-size:13px;" id="taxError"></p>
                 </div>
+                <div class="form-group"><label><strong>Gender</strong><br></label>
+                <select id="gender" name="gender" class="form-control float-left">
+                                    <optgroup label="Select Gender">
+                                    <?php if (isset($_SESSION['gender'])){echo '<option selected="" value="'.$_SESSION['gender'].'">'.$_SESSION['gender'].'</option>';}?>
+                                    <option  value=""></option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    
+                                </optgroup>
+                            </select></div>
+                <div class="form-group"><label><strong>Date of Birth</strong><br></label><input class="form-control" type="date" min="0" required="" id="date"   name="date_of_birth"></div>
                 <div class="form-group"><label><strong>Physical Address</strong></label><input class="form-control" type="text" id="autocomplete_search" required="" id="address" value="<?php if (isset($_SESSION['address'])){ echo $_SESSION['address'];}?>" name="physicalAddress">
              
                
@@ -185,8 +196,14 @@ session_start();
   var email =  $("#emailError").text();
   var phone =  $("#phoneError").text();
   var tax =  $("#taxError").text();
-  if(id !="" && email !="" &&  phone !="" && tax !="") 
+  var gender =  $("#gender").val();
+
+
+  if(id !="" && email !="" &&  phone !="" && tax !="" && gender !="") 
   {
+      if(gender ==""){
+        $("#gender").css('border-color', "red");
+      }
    
      alert(id);
      alert(email);

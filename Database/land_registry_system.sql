@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 06, 2020 at 10:34 AM
+-- Generation Time: Mar 10, 2020 at 02:39 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.2.27
 
@@ -69,6 +69,7 @@ CREATE TABLE `charges` (
   `Title_ID` int(11) NOT NULL,
   `Charge` varchar(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- Error reading data for table land_registry_system.charges: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `land_registry_system`.`charges`' at line 1
 
 -- --------------------------------------------------------
 
@@ -133,14 +134,7 @@ CREATE TABLE `titles` (
   `Sub_County` varchar(255) NOT NULL,
   `Ward` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `titles`
---
-
-INSERT INTO `titles` (`Title_ID`, `Title_Number`, `Plot_Number`, `Approximate_Area(Ha)`, `County`, `Sub_County`, `Ward`) VALUES
-(1, 'adsad', '7657655', 0.0213, 'wrwer', 'rwerew', 'rewew'),
-(2, 'RUIRU/RUIRU EAST BLOCK 2/300 55', '938928/02', 0.0213, 'Kiambu', 'Ruiru', 'Gatongora ');
+-- Error reading data for table land_registry_system.titles: #1064 - You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'FROM `land_registry_system`.`titles`' at line 1
 
 -- --------------------------------------------------------
 
@@ -160,8 +154,12 @@ CREATE TABLE `title_owners` (
 --
 
 INSERT INTO `title_owners` (`Title_Owners_ID`, `Title_ID`, `User_ID`, `Type_of_Ownership`) VALUES
-(1, 1, 2, 'Patnership'),
-(2, 2, 2, 'Sole');
+(9, 10, 1, 'SOLE'),
+(10, 10, 1, 'SOLE'),
+(11, 12, 1, 'SOLE'),
+(12, 10, 1, 'SOLE'),
+(13, 12, 1, 'SOLE'),
+(14, 15, 1, 'SOLE');
 
 -- --------------------------------------------------------
 
@@ -174,16 +172,18 @@ CREATE TABLE `transfers` (
   `Title_ID` int(11) NOT NULL,
   `User_ID(From)` int(11) NOT NULL,
   `User_ID(To)` int(11) NOT NULL,
-  `Transfer_Date` varchar(100) NOT NULL
+  `Transfer_Date` varchar(100) NOT NULL,
+  `Status` varchar(255) NOT NULL,
+  `Accept_Date` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `transfers`
 --
 
-INSERT INTO `transfers` (`Transfer_ID`, `Title_ID`, `User_ID(From)`, `User_ID(To)`, `Transfer_Date`) VALUES
-(1, 2, 1, 2, '03/03/2020'),
-(2, 1, 1, 2, '03/03/2020');
+INSERT INTO `transfers` (`Transfer_ID`, `Title_ID`, `User_ID(From)`, `User_ID(To)`, `Transfer_Date`, `Status`, `Accept_Date`) VALUES
+(4, 2, 1, 2, '09/03/2020', 'ACCEPTED', 'None'),
+(5, 2, 2, 1, '09/03/2020', 'ACCEPTED', 'None');
 
 -- --------------------------------------------------------
 
@@ -199,6 +199,8 @@ CREATE TABLE `users` (
   `Email_Address` varchar(255) NOT NULL,
   `Phonenumber` int(9) NOT NULL,
   `Tax_Number` int(13) NOT NULL,
+  `Gender` varchar(255) NOT NULL,
+  `Date_of_Birth` varchar(255) NOT NULL,
   `Physical_Address` varchar(255) NOT NULL,
   `Password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -207,9 +209,36 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`User_ID`, `ID_Number`, `ID_Picture`, `Fullnames`, `Email_Address`, `Phonenumber`, `Tax_Number`, `Physical_Address`, `Password`) VALUES
-(1, 12345678, '12321123.jpeg', 'Lewis Maina', 'muriukimainalewis@gmail.com', 714308029, 1234567890, '123 William Street, New York, NY, USA', '$2y$10$.x6syWeDUn7FQ6b/g663Leunqu8qctADsCrJOJuucRvb1fW7x9Vfq'),
-(2, 87654321, '87654321.png', 'Angela Gathoni', 'angelagathoni@gmail.com', 789152368, 123456789, 'Ga-Rankuwa, South Africa', '$2y$10$rsXbm5j6mwqxNzxkU/W4B.MfIORuOj.dPfILf1GwQSwo1ygIDf14y');
+INSERT INTO `users` (`User_ID`, `ID_Number`, `ID_Picture`, `Fullnames`, `Email_Address`, `Phonenumber`, `Tax_Number`, `Gender`, `Date_of_Birth`, `Physical_Address`, `Password`) VALUES
+(1, 12345678, '12321123.jpeg', 'Lewis Maina', 'muriukimainalewis@gmail.com', 714308029, 1234567890, '', '', '123 William Street, New York, NY, USA', '$2y$10$.x6syWeDUn7FQ6b/g663Leunqu8qctADsCrJOJuucRvb1fW7x9Vfq'),
+(3, 87654321, '87654321.jpeg', 'Angela Gathoni', 'angelagathoni@gmail.com', 789152368, 123456789, 'Male', '1999-01-07', '123 William Street, New York, NY, USA', '$2y$10$n1Nj0wEUH6z/6DCrq9Q10emsbKqEZ9LgWoIydwC6FLesXYFkteCOS');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_titles`
+--
+
+CREATE TABLE `user_titles` (
+  `Title_ID` int(11) NOT NULL,
+  `Title_Number` varchar(255) NOT NULL,
+  `Plot_Number` varchar(255) NOT NULL,
+  `Approximate_Area(Ha)` double NOT NULL,
+  `County` varchar(255) NOT NULL,
+  `Sub_County` varchar(255) NOT NULL,
+  `Ward` varchar(255) NOT NULL,
+  `User_ID` int(11) NOT NULL,
+  `Status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `user_titles`
+--
+
+INSERT INTO `user_titles` (`Title_ID`, `Title_Number`, `Plot_Number`, `Approximate_Area(Ha)`, `County`, `Sub_County`, `Ward`, `User_ID`, `Status`) VALUES
+(75, 'RUIRU/RUIRU EAST BLOCK 2/300 59', '122121/12', 122, 'Kiambu', 'Changamwe', 'Kipevu', 1, 'SUBMITTED'),
+(78, 'RUIRU/RUIRU EAST BLOCK 2/300 55', '122121/11', 11, 'Mombasa', 'Changamwe', 'Kipevu', 1, 'SUBMITTED'),
+(80, '321', '12', 0, 'Mombasa', 'Changamwe', 'Kipevu', 1, 'SUBMITTED');
 
 --
 -- Indexes for dumped tables
@@ -274,6 +303,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `Email_Address` (`Email_Address`);
 
 --
+-- Indexes for table `user_titles`
+--
+ALTER TABLE `user_titles`
+  ADD PRIMARY KEY (`Title_ID`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -311,25 +346,31 @@ ALTER TABLE `subdivisons`
 -- AUTO_INCREMENT for table `titles`
 --
 ALTER TABLE `titles`
-  MODIFY `Title_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `Title_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `title_owners`
 --
 ALTER TABLE `title_owners`
-  MODIFY `Title_Owners_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Title_Owners_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `transfers`
 --
 ALTER TABLE `transfers`
-  MODIFY `Transfer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Transfer_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `User_ID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `User_ID` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user_titles`
+--
+ALTER TABLE `user_titles`
+  MODIFY `Title_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

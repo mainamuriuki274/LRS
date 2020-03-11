@@ -16,7 +16,8 @@ $email = $_POST['emailAddress'];
 $phonenumber = $_POST['mobileNumber'];
 $taxnumber =$_POST['taxNumber'];
 $address = $_POST['physicalAddress'];
-
+$date_of_birth = $_POST['date_of_birth'];
+$gender = $_POST['gender'];
 
 $_SESSION['idnumber']=$idnumber;
 $_SESSION['fullnames']=$fullnames;
@@ -24,6 +25,9 @@ $_SESSION['email']=$email;
 $_SESSION['phonenumber']=$phonenumber;
 $_SESSION['taxnumber']=$taxnumber;
 $_SESSION['address']=$address;
+$_SESSION['date_of_birth']=$date_of_birth;
+$_SESSION['gender']=$gender;
+
 
 $filename = $_FILES['idPicture']['name'];
 $file_tmp = $_FILES['idPicture']['tmp_name'];
